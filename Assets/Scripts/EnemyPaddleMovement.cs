@@ -16,6 +16,8 @@ public class EnemyPaddleMovement : MonoBehaviour
     private Vector2 startPosition;
     //Ab yaa check karna ka paddle move kar sekhtay haa yaa nahi abho
     private bool canMove;
+    //Hum log ek deadzone banye gay take ball us deadzone ko cross kare toh enemy ka paddle move hoo
+    [SerializeField] private float deadZone = 2f;
 
     public static EnemyPaddleMovement instance;
 
@@ -42,16 +44,17 @@ public class EnemyPaddleMovement : MonoBehaviour
     {
         //ball or paddle kay beach ka different lena ball paddle say kitni dor haa
         float ballDistance = ball.transform.position.y - transform.position.y;
+        Debug.Log(ballDistance);
         direction = Vector2.zero;
 
         //Agar ball 0.5f y ki position ho toh yani ball up haa toh paddle ko uper
         //Bhejo or agar ball ka distance -0.5f say kaam hoo yani agar -0.6 hoo toh 
         //Is toh paddle ko niche bhejo
-        if (ballDistance > 0.5f)
+        if (ballDistance > deadZone)
         {
             direction = Vector2.up;
         }
-        if(ballDistance < -0.5f)
+        if(ballDistance < -deadZone)
         {
             direction = Vector2.down;
         }
